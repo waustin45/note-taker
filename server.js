@@ -18,13 +18,14 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/notes.html'));
     
   });
-  app.get('/api/notes', (req, res) => {
+app.get('/api/notes', (req, res) => {
     res.json(data)
   });
-  app.post('/api/notes', (req, res) => {
+  // add new notes to the json file
+app.post('/api/notes', (req, res) => {
    const { title, text, id} = req.body
    
-    
+    // if the response has a body and a title then create a newNote object and push it into the array and update the json file.
     if (req.body && req.body.title) {
         const newNote = {
             title, 
@@ -50,14 +51,29 @@ app.get('/notes', (req, res) => {
         return
     } else {console.log("error")}
   });
-  app.delete('/api/notes/:id', (req, res) => {
+  // Deletes specific notes from the json file
+app.delete('/api/notes/:id', (req, res) => {
     const deleteID = req.params.id
-    const removedID = data.find(item => {item.id === deleteID})
-    if(removedID) {
-        dataArray = dataArray.filter(newItem => newItem.id === deleteID)
+    // loops through each item in the array looking for its ID and if it matches the param then that item is spiced out of the array
+    for (let i = 0; i < data.length; i++) {
+      if (deleteID == data[i].id) {
+        console.log(data[i].id + "deleted")
+        data.splice(i,1)
+      } else {
+        console.log("No match")
+        
+      }
+      console.log(JSON.stringify(data[i]) + " iterated data")
     }
-    console.log(dataArray)
     
+    console.log(JSON.stringify(data) + " final data")
+    fs.writeFile("./db/db.json", JSON.stringify(data),  (err) => {
+      if (err) {
+          console.log(err)
+      } else {
+          console.log("written successfully")
+      }
+  })
   })
 
 app.listen(PORT, () => {
