@@ -24,14 +24,14 @@ app.get('/api/notes', (req, res) => {
   // add new notes to the json file
 app.post('/api/notes', (req, res) => {
    const { title, text, id} = req.body
-   
+   const newNote = {
+    title, 
+    text,
+    id
+}
     // if the response has a body and a title then create a newNote object and push it into the array and update the json file.
     if (req.body && req.body.title) {
-        const newNote = {
-            title, 
-            text,
-            id
-        }
+        
         const noteString = JSON.stringify(newNote)
         const dataString = [JSON.stringify(data)].push(noteString)
          data.push(newNote)
@@ -44,12 +44,10 @@ app.post('/api/notes', (req, res) => {
                 console.log("written successfully")
             }
         })
-        // console.log(newNote)
-        // data.push(newNote)
-       
-        console.log(`${JSON.stringify(newNote)} has been pushed to data: ${JSON.stringify(data)}`)
-        return
+
+        
     } else {console.log("error")}
+    res.json(newNote)
   });
   // Deletes specific notes from the json file
 app.delete('/api/notes/:id', (req, res) => {
@@ -63,7 +61,7 @@ app.delete('/api/notes/:id', (req, res) => {
         console.log("No match")
         
       }
-      console.log(JSON.stringify(data[i]) + " iterated data")
+      
     }
     
     console.log(JSON.stringify(data) + " final data")
@@ -74,6 +72,7 @@ app.delete('/api/notes/:id', (req, res) => {
           console.log("written successfully")
       }
   })
+  res.sendStatus(200)
   })
 
 app.listen(PORT, () => {

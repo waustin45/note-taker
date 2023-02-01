@@ -94,10 +94,11 @@ const handleNoteSave = () => {
     id: createRandoID()
   };
   saveNote(newNote).then(() => {
+    console.log(newNote)
     getAndRenderNotes();
     renderActiveNote();
   });
- location.reload()
+ 
 };
 
 // Delete the clicked note
@@ -113,10 +114,11 @@ const handleNoteDelete = (e) => {
   }
 
   deleteNote(noteId).then(() => {
+    
     getAndRenderNotes();
     renderActiveNote();
   });
-  location.reload()
+  
 };
 
 // Sets the activeNote and displays it
