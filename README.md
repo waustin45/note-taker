@@ -6,7 +6,7 @@ I wanted to make a note taking app to keep up with tasks that i needed to be don
 ## Links
 - Github: https://github.com/waustin45
 - Repository: https://github.com/waustin45/note-taker.git
-- Live Site:
+- Live Site: https://note-taker-wah.herokuapp.com/notes
 
 ## User Story 
 ````
